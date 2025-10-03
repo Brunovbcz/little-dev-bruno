@@ -1,10 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
 :root {
     --cor-primaria: #192A6B;
     --cor-secundaria: #02428F;
     --cor-fundo: #A4A4A4;
     --cor-laranja: #E25A14;
 }
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 
 *{
     margin: 0;
@@ -22,5 +23,85 @@ aside {
 }
 
 h1{
+    position: absolute;
+    left: 144px;
+    margin-top: 24px;
     color: var(--cor-primaria);
+    font-family: 'Open Sans';
+}
+
+aside div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 96px;
+    height: 100vh;
+    margin-top: 90px;
+    margin-bottom: 90px;
+}
+
+button {
+    height: 48px;
+    margin-top: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    transition: all .1s ease;
+    transform: scale(1.1, 1.1);
+}
+
+.menus-background {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 100px;
+    justify-content: center;
+    top: 15%;
+    left: 96px;
+    height:288px;
+    width: calc(100vw - 96px);
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--cor-fundo);
+    width: 480px;
+    height: 288px;
+    border-radius: 30px;
+    min-width: 240px;
+    min-height: 144px;
+    box-shadow: -12px 12px 20px rgb(126, 126, 126);
+}
+
+.menu p {
+    color: var(--cor-secundaria);
+    text-align: center;
+    font-size: 28px;
+    margin-top: 28px;
+    font-weight: bolder;
+}
+
+.menu label {
+    color: white;
+    font-size: 130px;
+    align-self: center;
+    justify-self: center;
+    font-weight: 700;
+}
+
+footer {
+    margin-top: -80px;
+    display: flex;
+    justify-content: right;
+    height: 80px;
+}
+
+#logo {
+    width: 304px;
+    height: 80px;
 }
