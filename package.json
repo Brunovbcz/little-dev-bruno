@@ -19,5 +19,6 @@
   "homepage": "https://github.com/Brunovbcz/little-dev-bruno#readme",
   "dependencies": {
     "express": "^5.1.0"
-  }
+  },
+  "devDependencies": {}
 }
