@@ -17,9 +17,21 @@
 aside {
     display: flex;
     flex-direction: column;
+    justify-content: left;
     background-color: var(--cor-primaria);
     width: 96px;
     height: 100vh;
+    transition: width 0.2s ease-in-out;
+}
+aside.open {
+    width: 366px;
+}
+
+#menu-btn {
+    margin-top: 24px;
+}
+#menu-btn.open {
+    transform: rotate(-90deg);
 }
 
 h1{
@@ -28,9 +40,13 @@ h1{
     margin-top: 24px;
     color: var(--cor-primaria);
     font-family: 'Open Sans';
+    transition: all 0.2s ease-in-out;
+}
+body h1.open{
+    left: 378px;
 }
 
-aside div {
+aside .buttons {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -40,15 +56,51 @@ aside div {
     margin-bottom: 90px;
 }
 
-button {
+.icone-label {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+.icone-label.open {
+    margin-left: 24px;
+}
+
+#text-label {
+    display: none;
+    color: white;
+    font-family: 'Open Sans';
+    font-weight: bold;
+    font-size: x-large;
+    text-align: left;
+    margin-left: 24px;
+}
+#text-label.open{
+    display: flex;
+}
+
+#menu-btn {
     height: 48px;
-    margin-top: 24px;
     background: none;
     border: none;
     cursor: pointer;
+    width: 96px;
 }
 
-button:hover {
+.menu-icon{
+    height: 48px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 96px;
+    display: flex;
+}
+
+.menu-icon .a-menu-icon{
+    width: 150px;
+    height: 48px;
+}
+
+.menu-icon:hover {
     transition: all .1s ease;
     transform: scale(1.1, 1.1);
 }
@@ -64,6 +116,11 @@ button:hover {
     left: 96px;
     height:288px;
     width: calc(100vw - 96px);
+    transition: all 0.2s ease-in-out;
+}
+.menus-background.open{
+    left: 378px;
+    width: calc(100vw - 390px);
 }
 
 .menu {
@@ -104,4 +161,10 @@ footer {
 #logo {
     width: 304px;
     height: 80px;
+}
+
+.icone-label{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
