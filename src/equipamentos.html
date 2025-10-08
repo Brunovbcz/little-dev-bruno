@@ -7,7 +7,6 @@
     <title>Sistema de Equipamentos</title>
 </head>
 <body>
-    <h1 id="title">Equipamentos</h1>
     <aside>
         <button id="menu-btn"><img src="images/menu.png" height="48px" onclick="menuButton()"></button> <!-- Icone / Botão do menu -->
 
@@ -46,8 +45,48 @@
 
     </aside>
 
+    <div class="background">
+        <div class="search-div">
+            <h1 id="title">Equipamentos</h1>
+            <input id="search" type="search" placeholder="Pesquisar">
+            <button id="filter"><img id="filter" src="images/filter.png"></button>
+        </div>
+        
+        <button id="add-equipment" onclick="toggleEquipmentMenu()">Adicionar</button>
+
+        <div class="equipments-background">
+
+        </div>
+    </div>
     
-    
+    <div class="all-background">
+        <div class="add-background">
+            <div class="line">
+                <h2>Adicionar</h2>
+                <button id="cancel" onclick="toggleEquipmentMenu()">Cancelar</button>
+            </div>
+            
+            <form>
+                <div class="line1">
+                    <label class="line-label">Nome do Equipamento</label>
+                    <input type="text" placeholder="Digite o nome do equipamento">
+                </div>
+
+                <div class="line1">
+                    <label class="line-label">Descrição</label>
+                    <input type="text" placeholder="Digite a descrição">
+                </div>
+
+                <div class="line1">
+                    <label class="line-label">Imagem</label>
+                    <label for="file-input" class="custom-button">Escolher Imagem</label>
+                    <input id="file-input" type="file" accept="image/*" style="display: none;">
+                </div>
+            </form>
+            
+        </div>
+    </div>
+
     <footer>
         <img src="images/Logos - Sistema Fiep RGB_COR_SENAI.png" id="logo">
     </footer>
