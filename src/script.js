@@ -18,6 +18,32 @@ function menuButton() {
 // Função para abrir menu de adicionar equipamento
 function toggleEquipmentMenu() {
     let background = document.querySelector('.all-background')
-
     background.classList.toggle('visible')
 }
+
+document.querySelector('#add').addEventListener('click', async function(e) {
+    e.preventDefault()
+
+    let name = document.querySelector('#name').value
+    let desc = document.querySelector('#desc').value
+    let img = document.querySelector('#file-input').value
+
+    if (img === '' || desc === '' || name === '') return
+
+    let fileExtension_img = ['jpeg', 'jpg', 'png', 'gif', 'bmp'];
+    
+    let fileExtension = img.split('.').pop().toLowerCase();
+
+    if (fileExtension_img.indexOf(fileExtension) === -1) {
+        let formData = new FormData (this)
+        
+        try {
+            await fetch('/equipamentos', {
+                method: 'POST',
+                body: formData
+            })
+        } catch (err) {
+            console.error(err)
+        }
+    }
+})

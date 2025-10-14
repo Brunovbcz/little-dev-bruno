@@ -52,7 +52,7 @@
             <button id="filter"><img id="filter" src="images/filter.png"></button>
         </div>
         
-        <button id="add-equipment" onclick="toggleEquipmentMenu()">Adicionar</button>
+        <button class="add-equipment" onclick="toggleEquipmentMenu()">Adicionar</button>
 
         <div class="equipments-background">
 
@@ -69,12 +69,12 @@
             <form>
                 <div class="line1">
                     <label class="line-label">Nome do Equipamento</label>
-                    <input type="text" placeholder="Digite o nome do equipamento">
+                    <input id="name" type="text" placeholder="Digite o nome do equipamento">
                 </div>
 
                 <div class="line1">
                     <label class="line-label">Descrição</label>
-                    <input type="text" placeholder="Digite a descrição">
+                    <input id="desc" type="text" placeholder="Digite a descrição">
                 </div>
 
                 <div class="line1">
@@ -82,6 +82,8 @@
                     <label for="file-input" class="custom-button">Escolher Imagem</label>
                     <input id="file-input" type="file" accept="image/*" style="display: none;">
                 </div>
+
+                <button class="add-equipment" id="add">Adicionar</button>
             </form>
             
         </div>

@@ -215,7 +215,7 @@ footer {
     transform: scale(1.05, 1.05)
 }
 
-#add-equipment {
+.add-equipment {
     margin-top: 32px;
     width: 168px;
     height: 48px;
@@ -230,7 +230,7 @@ footer {
     transition: transform 0.1s ease-in-out;
 }
 
-#add-equipment:hover {
+.add-equipment:hover {
     transform: scale(1.05, 1.05);
 }
 
@@ -343,3 +343,8 @@ form input {
     background-color: var(--cor-primaria);
     color: white;
 }
+
+.custom-button {
+    color: #727272;
+}
+
