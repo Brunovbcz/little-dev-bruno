@@ -39,6 +39,7 @@ app.get('/equipamentos', async (req, res) => {
 
 // POST
 app.post('/equipamentos', upload.single('file-input'), async (req, res) => {
+    console.log(req.body)
     /*console.log(req.file, req.name, req.desc)
     const { name, desc, img } = req.body
 

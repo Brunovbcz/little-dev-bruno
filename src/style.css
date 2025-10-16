@@ -348,3 +348,9 @@ form input {
     color: #727272;
 }
 
+.add-div {
+    display: flex;
+    justify-content: right;
+    margin: 7px;
+    margin-top: 223px;
+}

@@ -26,21 +26,21 @@ document.querySelector('#add').addEventListener('click', async function(e) {
 
     let name = document.querySelector('#name').value
     let desc = document.querySelector('#desc').value
-    let img = document.querySelector('#file-input').value
+    let img = document.querySelector('#file-input')
 
     if (img === '' || desc === '' || name === '') return
 
-    let fileExtension_img = ['jpeg', 'jpg', 'png', 'gif', 'bmp'];
+    let fileExtension_img = ['jpeg', 'jpg', 'png', 'gif', 'bmp']; 
+    let fileExtension = img.value.split('.').pop().toLowerCase();
     
-    let fileExtension = img.split('.').pop().toLowerCase();
-
-    if (fileExtension_img.indexOf(fileExtension) === -1) {
-        let formData = new FormData (this)
+    if (fileExtension_img.indexOf(fileExtension)) {
+        let formData = new FormData (document.querySelector('.add-equipment-form'))
         
         try {
             await fetch('/equipamentos', {
                 method: 'POST',
-                body: formData
+                body: JSON.stringify({formData}),
+                headers: { 'Content-Type': 'application/json' }
             })
         } catch (err) {
             console.error(err)
