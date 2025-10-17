@@ -5,6 +5,7 @@
     --cor-secundaria: #02428F;
     --cor-fundo: #A4A4A4;
     --cor-laranja: #E25A14;
+    --cor-borda: #D0D0D0;
 }
 
 *{
@@ -235,13 +236,38 @@ footer {
 }
 
 .equipments-background {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
     background-color: var(--cor-primaria);
     align-self: center;
+    border: solid 3px var(--cor-primaria);
     margin-top: 32px;
     width: 82%;
     height: 578px;
-    border-radius: 20px;
+    border-radius: 10px;
+    gap: 18px;
     overflow-y: auto;
+}
+
+.equipments-background::-webkit-scrollbar {
+    width: 10px;         
+    height: 10px;              
+}
+
+.equipments-background::-webkit-scrollbar-track {
+    background: var(--cor-fundo);
+    border-radius: 4px;
+}
+
+.equipments-background::-webkit-scrollbar-thumb {
+    background-color: var(--cor-borda);
+    border-radius: 4px;
+    border: 2px solid var(--cor-fundo);
+}
+
+.equipments-background::-webkit-scrollbar-thumb:hover {
+    background-color: #727272;
 }
 
 .all-background {
@@ -275,7 +301,7 @@ footer {
 #cancel {
     width: 168px;
     height: 48px;
-    margin: 5px;
+    margin: 20px;
     border-radius: 10px;
     border: solid 2px #d0d0d0;
     box-shadow: -4px 4px 0px #d0d0d0;
@@ -323,6 +349,14 @@ form input {
     font-size: medium;
 }
 
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+
+}
+
 .custom-button {
     display: flex;
     align-items: center;
@@ -348,9 +382,44 @@ form input {
     color: #727272;
 }
 
-.add-div {
+.add-div #add {
+    margin-top: auto;
+    margin: 20px;
+}
+
+.eq-background {
     display: flex;
-    justify-content: right;
-    margin: 7px;
-    margin-top: 223px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 324px;
+    height: 348px;
+    background-color: var(--cor-fundo);
+    border: solid 2px var(--cor-borda);
+    margin: 10px;
+    border-radius: 20px;
+}
+
+.eq-background img {
+    height: 78%;
+    border-radius: 15px;
+}
+
+.eq-background .edit-equipment-btn {
+    margin-top: 10px;
+    height: 48px;
+    width: 112px;
+    border-radius: 10px;
+    border: solid 3px #d0d0d0;
+    box-shadow: -3px 3px 0px #d0d0d0;
+    background-color: white;
+    font-size: large;
+    font-weight: 900;
+    color: var(--cor-primaria);
+    cursor: pointer;
+    transition: transform 0.1s ease-in-out;
+}
+
+.eq-background .edit-equipment-btn:hover {
+    transform: scale(1.05, 1.05);
 }
