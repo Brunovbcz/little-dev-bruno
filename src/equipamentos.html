@@ -55,7 +55,10 @@
         <button class="add-equipment" onclick="toggleEquipmentMenu()">Adicionar</button>
 
         <div class="equipments-background">
-
+            <div class="eq-background">
+                <img src="https://m.media-amazon.com/images/I/510uTHyDqGL.jpg">
+                <button class="edit-equipment-btn">Editar</button>
+            </div>
         </div>
     </div>
     
@@ -66,25 +69,25 @@
                 <button id="cancel" onclick="toggleEquipmentMenu()">Cancelar</button>
             </div>
             
-            <form class="add-equipment-form">
+            <form id="forms" class="add-equipment-form">
                 <div class="line1">
-                    <label class="line-label">Nome do Equipamento</label>
-                    <input id="name" type="text" placeholder="Digite o nome do equipamento">
+                    <label for="name" class="line-label">Nome do Equipamento</label>
+                    <input id="name" type="text" name="name" placeholder="Digite o nome do equipamento">
                 </div>
 
                 <div class="line1">
-                    <label class="line-label">Descrição</label>
-                    <input id="desc" type="text" placeholder="Digite a descrição">
+                    <label for="desc" class="line-label">Descrição</label>
+                    <input id="desc" type="text" name="desc" placeholder="Digite a descrição">
                 </div>
 
                 <div class="line1">
-                    <label class="line-label">Imagem</label>
+                    <label  class="line-label">Imagem</label>
                     <label for="file-input" class="custom-button">Escolher Imagem</label>
-                    <input id="file-input" type="file" accept="image/*" style="display: none;">
+                    <input id="file-input" type="file" name="file-input" accept="image/*" style="display: none;">
                 </div>
 
                 <div class="add-div">
-                    <button class="add-equipment" id="add">Adicionar</button>
+                    <button class="add-equipment" id="add" type="submit">Adicionar</button>
                 </div>
                 
             </form>
@@ -96,6 +99,6 @@
         <img src="images/Logos - Sistema Fiep RGB_COR_SENAI.png" id="logo">
     </footer>
 
-    <script src="script.js"></script>
+    <script src="scipts/equipamentos.js"></script>
 </body>
 </html>

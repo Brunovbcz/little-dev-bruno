@@ -39,21 +39,9 @@ app.get('/equipamentos', async (req, res) => {
 
 // POST
 app.post('/equipamentos', upload.single('file-input'), async (req, res) => {
-    console.log(req.body)
-    /*console.log(req.file, req.name, req.desc)
-    const { name, desc, img } = req.body
-
-    try {
-        const results = await query('INSERT INTO equipamentos (nome_equipamento, descricao, tipo_mime, imagem) VALUES (?, ?, ?, ?)', [name, desc, img])
-        res.status(201).json({ id: results.insertId })
-    } catch (err) {
-        console.error('erro no mySql:', err)
-        res.status(500).json({ error: err.mesage })
-    }
-    */
     const file = req.file;
-    const name = req.body.name;
-    const description = req.body.description;
+    const { name, desc } = req.body
+
     if (!file) {
         return res.status(400).json({ success: false, message: 'Nenhum arquivo enviado.' });
     }
@@ -63,7 +51,7 @@ app.post('/equipamentos', upload.single('file-input'), async (req, res) => {
         const dadosBinarios = file.buffer; 
 
         const query = 'INSERT INTO equipamentos (nome_equipamento, descricao, tipo_mime, imagem) VALUES (?, ?, ?, ?)';
-        const resultado = await executePromisified(query, [name, description, tipoMime, dadosBinarios]);
+        const resultado = await executePromisified(query, [name, desc, tipoMime, dadosBinarios]);
 
         res.json({ 
             success: true, 
