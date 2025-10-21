@@ -192,7 +192,7 @@ footer {
 }
 
 #search {
-    text-align: center;
+    text-indent: 10px;
     margin-top: 90px;
     height: 44px;
     width: calc(100% - 434px);
@@ -240,7 +240,6 @@ footer {
     justify-content: flex-start;
     flex-wrap: wrap;
     background-color: var(--cor-primaria);
-    align-self: center;
     border: solid 3px var(--cor-primaria);
     margin-top: 32px;
     width: 82%;
@@ -296,6 +295,11 @@ footer {
     margin: 10px;
     color: var(--cor-primaria);
     font-weight: 900;
+}
+
+.edit-background {
+    width: 43%;
+    height: 66%;
 }
 
 #cancel {
@@ -401,8 +405,15 @@ form {
 }
 
 .eq-background img {
-    height: 78%;
+    height: 70%;
     border-radius: 15px;
+}
+
+.eq-background .eq-name {
+    margin-bottom: auto;
+    color: white;
+    font-weight: 900;
+    font-size: x-large;
 }
 
 .eq-background .edit-equipment-btn {
@@ -417,6 +428,7 @@ form {
     font-weight: 900;
     color: var(--cor-primaria);
     cursor: pointer;
+    margin-bottom: auto;
     transition: transform 0.1s ease-in-out;
 }
 
