@@ -51,17 +51,52 @@ app.post('/equipamentos', upload.single('file-input'), async (req, res) => {
         const dadosBinarios = file.buffer; 
 
         const query = 'INSERT INTO equipamentos (nome_equipamento, descricao, tipo_mime, imagem) VALUES (?, ?, ?, ?)';
+        const selectQuery = 'SELECT * FROM equipamentos'
         const resultado = await executePromisified(query, [name, desc, tipoMime, dadosBinarios]);
+        const equipamentos = await executePromisified(selectQuery)
+        const equipamentosProntos = equipamentos.map(row => {
+            const dataUrl = `data:${row.tipo_mime};base64,${row.imagem.toString('base64')}`
+          
+            return {
+              id: row.id,
+              nome: row.nome_equipamento,
+              descricao: row.descricao,
+              src: dataUrl
+            }
+          })
 
         res.json({ 
             success: true, 
-            message: 'Arquivo enviado e salvo com sucesso!', 
-            id: resultado.insertId 
+            message: 'Arquivo enviado e salvo com sucesso!',
+            resultado,
+            equipamentosProntos
         });
 
     } catch (erro) {
         console.error('Erro ao salvar o arquivo:', erro);
         res.status(500).json({ success: false, message: 'Erro interno do servidor.' });
+    }
+})
+
+// GET
+app.get('/equipamentos-data', async (req, res) => {
+    try {
+        const query = 'SELECT * FROM equipamentos'
+        const equipamentos = await executePromisified(query);
+        const equipamentosProntos = equipamentos.map(row => {
+            const dataUrl = `data:${row.tipo_mime};base64,${row.imagem.toString('base64')}`
+          
+            return {
+              id: row.id,
+              nome: row.nome_equipamento,
+              descricao: row.descricao,
+              src: dataUrl
+            }
+          })
+        res.json({ success: true, equipamentosProntos })
+    } catch (err) {
+        console.error('Erro ao carregar dados', err)
+        res.status(500).json({success: false, message: 'Erro no servidor'})
     }
 })
 
