@@ -52,18 +52,18 @@
             <button id="filter"><img id="filter" src="images/filter.png"></button>
         </div>
         
-        <button class="add-equipment" onclick="toggleEquipmentMenu('Adicionar')">Adicionar</button>
+        <button class="add-equipment" onclick="toggleAddMenu()">Adicionar</button>
 
         <div class="equipments-background">
             
         </div>
     </div>
     
-    <div class="all-background">
+    <div class="all-add-background">
         <div class="add-background">
             <div class="line">
                 <h2>Adicionar</h2>
-                <button id="cancel" onclick="toggleEquipmentMenu()">Cancelar</button>
+                <button id="cancel" onclick="toggleAddMenu()">Cancelar</button>
             </div>
             
             <form id="forms" class="add-equipment-form">
@@ -90,6 +90,39 @@
             </form>
         </div>
         
+    </div>
+
+    <div class="all-edit-background">
+        <div class="add-background">
+            <div class="line">
+                <h2>Editar</h2>
+                <button id="cancel" onclick="toggleEditMenu()">Cancelar</button>
+            </div>
+            
+            <form id="forms" class="add-equipment-form">
+                <div class="line1">
+                    <label for="name" class="line-label">Nome do Equipamento</label>
+                    <input id="name" type="text" name="name" placeholder="Digite o nome do equipamento">
+                </div>
+
+                <div class="line1">
+                    <label for="desc" class="line-label">Descrição</label>
+                    <input id="desc" type="text" name="desc" placeholder="Digite a descrição">
+                </div>
+
+                <div class="line1">
+                    <label  class="line-label">Imagem</label>
+                    <label for="file-input" class="custom-button">Escolher Imagem</label>
+                    <input id="file-input" type="file" name="file-input" accept="image/*" style="display: none;">
+                </div>
+
+                <div class="add-div-edit">
+                    <button class="cancel-edit" id="delete">Excluir</button>
+                    <button class="add-equipment" id="add" type="submit">Aplicar</button>
+                </div>
+                
+            </form>
+        </div>  
     </div>
 
     <footer>

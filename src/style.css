@@ -269,7 +269,7 @@ footer {
     background-color: #727272;
 }
 
-.all-background {
+.all-add-background {
     display: none;
     align-items: center;
     justify-content: center;
@@ -280,9 +280,25 @@ footer {
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.5);
 }
-.all-background.visible {
+.all-add-background.visible {
     display: flex;
 }
+
+.all-edit-background {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.all-edit-background.visible {
+    display: flex;
+}
+
 
 .add-background {
     background-color: #fff;
@@ -318,6 +334,25 @@ footer {
 }
 
 #cancel:hover {
+    transform: scale(1.05, 1.05);
+}
+
+#delete {
+    width: 168px;
+    height: 48px;
+    margin: 20px;
+    border-radius: 10px;
+    border: solid 2px #d0d0d0;
+    box-shadow: -4px 4px 0px #d0d0d0;
+    background-color: white;
+    font-size: large;
+    font-weight: 900;
+    color: var(--cor-primaria);
+    cursor: pointer;
+    transition: transform 0.1s ease-in-out;
+}
+
+#delete:hover {
     transform: scale(1.05, 1.05);
 }
 
@@ -358,7 +393,7 @@ form {
     flex-direction: column;
     justify-content: flex-end;
     align-items: flex-end;
-
+    height: 88%;
 }
 
 .custom-button {
@@ -386,7 +421,32 @@ form {
     color: #727272;
 }
 
+.add-div-edit {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-top: auto;
+}
+
+.add-div {
+    display: flex;
+    width: 100%;
+    justify-content: right;
+    margin-top: auto;
+}
+
 .add-div #add {
+    margin-top: auto;
+    margin: 20px;
+}
+
+.add-div-edit #add {
+    margin-top: auto;
+    margin: 20px;
+}
+
+.add-div-edit #delete {
+    color: var(--cor-laranja);
     margin-top: auto;
     margin: 20px;
 }

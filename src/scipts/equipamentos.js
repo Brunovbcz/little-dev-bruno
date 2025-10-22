@@ -1,8 +1,14 @@
+var equipments = []
+let selectedEquipment = {}
+
 function loadEquipments(data) {
     const equipmentsBackground = document.querySelector('.equipments-background')
     equipmentsBackground.innerHTML = ''
+    equipments = []
 
     data.equipamentosProntos.forEach((equipment) => {
+        equipments.push(equipment) // Colocar em um "Cache" para uso dos dados
+
         const eqBackground = document.createElement('div')
         const eqName = document.createElement('label')
         const img = document.createElement('img')
@@ -22,16 +28,31 @@ function loadEquipments(data) {
         eqBackground.appendChild(button)
 
         button.addEventListener('click', () => {
-            toggleEquipmentMenu('Editar')
+            selectedEquipment = equipment
+            toggleEditMenu(equipment.nome, equipment.descricao)
         })
     })
 }
 
-// Função para abrir menu de adicionar equipamento
-function toggleEquipmentMenu(str) {
-    let background = document.querySelector('.all-background')
+
+// Função para alternar menu de adicionar equipamento
+function toggleAddMenu() {
+    const background = document.querySelector('.all-add-background')
     background.classList.toggle('visible')
-    background.querySelector('h2').textContent = str
+}
+
+// Função para alternar menu de editar equipamento
+async function toggleEditMenu(name, desc) {
+    const background = document.querySelector('.all-edit-background')
+    background.classList.toggle('visible')
+    
+    if (!name && !desc) return
+
+    const nameIn = background.querySelector('#name')
+    const descIn = background.querySelector('#desc')
+
+    nameIn.value = name
+    descIn.value = desc
 }
 
 document.addEventListener('DOMContentLoaded', async (e) => {
@@ -48,7 +69,7 @@ document.addEventListener('DOMContentLoaded', async (e) => {
     }
 })
 
-// Verifica os input e envia p servidor
+// Verifica os input e envia p servidor para ADICIONAR
 document.getElementById('forms').addEventListener('submit', async function(e) {
     e.preventDefault()
     let name = document.querySelector('#name').value
@@ -82,5 +103,31 @@ document.getElementById('forms').addEventListener('submit', async function(e) {
             console.error(err)
         }
     }
-    toggleEquipmentMenu('Adicionar')
+    toggleAddMenu()
+})
+
+// Envia para o servidor EXCLUIR
+document.querySelector('#delete').addEventListener('click', async (e) => {
+    e.preventDefault()
+
+    confirm('Você deseja excluir esse equipamento? 💻')
+
+    const id = selectedEquipment.id
+    
+    try {
+        const response = await fetch('/equipamentos', {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id })
+        })
+        const data = await response.json()
+
+        if (response.ok && data.success) {
+            loadEquipments(data)
+        }
+    } catch (err) {
+        console.error(err)
+    }
+
+    toggleEditMenu()
 })
