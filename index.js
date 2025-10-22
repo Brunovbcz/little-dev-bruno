@@ -78,6 +78,20 @@ app.post('/equipamentos', upload.single('file-input'), async (req, res) => {
     }
 })
 
+// DELETE
+app.delete('/equipamentos', async (req, res) => {
+    console.log(req)
+    const { id } = req.body
+    const query = 'DELETE FROM equipamentos WHERE id = ?'
+
+    try {
+        const result = await executePromisified(query, [id])
+        res.json({ success: true, result })
+    } catch (err) {
+        res.status(500).json({ success: false, error: err.message })
+    }
+})
+
 // GET
 app.get('/equipamentos-data', async (req, res) => {
     try {
