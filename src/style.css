@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 
 :root {
+    --cor-escura: #111D4A;
     --cor-primaria: #192A6B;
     --cor-secundaria: #02428F;
     --cor-fundo: #A4A4A4;
@@ -239,8 +240,8 @@ footer {
     display: flex;
     justify-content: flex-start;
     flex-wrap: wrap;
-    background-color: var(--cor-primaria);
-    border: solid 3px var(--cor-primaria);
+    background-color: var(--cor-escura);
+    border: solid 3px var(--cor-escura);
     margin-top: 32px;
     width: 82%;
     height: 578px;
@@ -372,15 +373,16 @@ footer {
 .line1 {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     width: 100%;
-    margin-top: 32px;
+    margin-top: 24px;
 }
 
 form input {
     display: flex;
     margin-right: 20px;
     width: 100%;
-    height: 54px;
+    height: 42px;
     text-indent: 10px;
     border-radius: 10px;
     border: solid 2px #d0d0d0;
@@ -393,7 +395,7 @@ form {
     flex-direction: column;
     justify-content: flex-end;
     align-items: flex-end;
-    height: 88%;
+    height: 85%;
 }
 
 .custom-button {
@@ -440,7 +442,7 @@ form {
     margin: 20px;
 }
 
-.add-div-edit #add {
+.add-div-edit #aply {
     margin-top: auto;
     margin: 20px;
 }
@@ -493,5 +495,58 @@ form {
 }
 
 .eq-background .edit-equipment-btn:hover {
+    transform: scale(1.05, 1.05);
+}
+
+.reservations-background {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    background-color: var(--cor-escura);
+    border: solid 3px var(--cor-escura);
+    margin-top: 32px;
+    width: 82%;
+    height: 578px;
+    border-radius: 10px;
+    gap: 18px;
+    overflow-y: auto;
+}
+
+.reservations-background::-webkit-scrollbar {
+    width: 10px;         
+    height: 10px;              
+}
+
+.reservations-background::-webkit-scrollbar-track {
+    background: var(--cor-fundo);
+    border-radius: 4px;
+}
+
+.reservations-background::-webkit-scrollbar-thumb {
+    background-color: var(--cor-borda);
+    border-radius: 4px;
+    border: 2px solid var(--cor-fundo);
+}
+
+.reservations-background::-webkit-scrollbar-thumb:hover {
+    background-color: #727272;
+}
+
+.add-reservation {
+    margin-top: 32px;
+    width: 168px;
+    height: 48px;
+    border-radius: 10px;
+    border: solid 2px #d0d0d0;
+    box-shadow: -4px 4px 0px #d0d0d0;
+    background-color: white;
+    font-size: large;
+    font-weight: 900;
+    color: var(--cor-primaria);
+    cursor: pointer;
+    transition: transform 0.1s ease-in-out;
+}
+
+.add-reservation:hover {
     transform: scale(1.05, 1.05);
 }
