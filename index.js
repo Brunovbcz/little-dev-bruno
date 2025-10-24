@@ -87,42 +87,19 @@ app.post('/equipamentos', upload.single('file-input'), async (req, res) => {
 
 
 // UPDATE
-app.put('/equipamentos', upload.single('file-input'), async (req, res) => {
-    const file = req.file
-    const { name, desc } = req.body
-
-    if (!file) {
-        return res.status(400).json({ success: false, message: 'Nenhum arquivo enviado.' });
-    }
+app.put('/equipamentos/:id', async (req, res) => {
+    const { id } = req.params;
+    const { name, desc } = req.body;
 
     try {
-        const tipoMime = file.mimetype;
-        const dadosBinarios = file.buffer; 
-
-        const query = 'UPDATE equipamentos SET nome_equipamento = ?, descricao = ?, tipo_mime = ?, imagem = ? WHERE id = ?';
-        const selectQuery = 'SELECT * FROM equipamentos'
-        const resultado = await executePromisified(query, [name, desc, tipoMime, dadosBinarios]);
-        const equipamentos = await executePromisified(selectQuery)
-        const equipamentosProntos = equipamentos.map(row => {
-            const dataUrl = `data:${row.tipo_mime};base64,${row.imagem.toString('base64')}`
-          
-            return {
-              id: row.id,
-              nome: row.nome_equipamento,
-              descricao: row.descricao,
-              src: dataUrl
-            }
-          })
-
-        res.json({ 
-            success: true, 
-            message: 'Arquivo enviado e salvo com sucesso!',
-            resultado,
-            equipamentosProntos
-        });
+        const results = await executePromisified('UPDATE equipamentos SET nome_equipamento = ?, descricao = ? WHERE id = ?', [name, desc, id]);
+        if (results.affectedRows === 0) {
+            return res.status(404).json({ message: 'Registro não encontrado' });
+        }
+        res.json({ message: 'Dados atualizados com sucesso' });
     } catch (err) {
-        console.error('Erro ao salvar o arquivo:', err);
-        res.status(500).json({ success: false, message: 'Erro interno do servidor.' });
+        console.error('Erro no MySQL:', err);
+        res.status(500).json({ error: err.message });
     }
 })
 
