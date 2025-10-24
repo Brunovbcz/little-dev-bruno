@@ -42,6 +42,11 @@ function toggleAddMenu() {
     const background = document.querySelector('.all-add-background')
     background.classList.toggle('visible')
     document.querySelector('.custom-button').textContent = 'Escolher Imagem'
+
+    if (document.querySelector('.line #name') || document.querySelector('.line #desc')) {
+        document.querySelector('.line #name').value = ''
+        document.querySelector('.line #desc').value = ''    
+    }
 }
 
 // Função para alternar menu de editar equipamento
@@ -56,8 +61,6 @@ async function toggleEditMenu(name, desc) {
 
     nameIn.value = name
     descIn.value = desc
-
-    document.querySelector('.all-edit-background .custom-button').textContent = 'Escolher Imagem'
 }
 
 // Pega os equipamentos cadastrados no servidor
@@ -138,7 +141,7 @@ document.getElementById('add-form').addEventListener('submit', async function(e)
         if (response.ok && data.success) {
             loadEquipments(data.equipamentosProntos)
         } else {
-            alert('Adicione uma imagem para o equipamento.')
+            alert('Algo deu errado.')
         }
     } catch (err) {
         console.error('Erro:', err)
@@ -154,49 +157,39 @@ document.querySelector('#edit-form').addEventListener('submit', async (e) => {
 
     let name = document.querySelector('.all-edit-background #name').value
     let desc = document.querySelector('.all-edit-background #desc').value
-    let img = document.querySelector('.all-edit-background #file-input')
-    
-    newName = selectedEquipment.nome
-    newDesc = selectedEquipment.descricao
 
-    if (name !== newName || desc !== newDesc) {
-        let a = confirm('Você deseja aplicar as mudanças?')
-        if (a) {
+    const formData = new FormData();
 
-            if (img === '' || desc === '' || name === '') {
-                alert('Preencha os Campos')
-                return;  
-            } 
-        
-            let fileExtension_img = ['jpeg', 'jpg', 'png', 'gif', 'bmp']; 
-            let fileExtension = img.value.split('.').pop().toLowerCase();
+    formData.append('name', name) ;
+    formData.append('desc', desc) ;
+
+    let a = confirm('Você deseja aplicar as mudanças?');
+    if (a) {
+
+        if (desc.trim() === '' || name.trim() === '') {
+            alert('Preencha os Campos');
+            return;
+        }
+        let id = selectedEquipment.id
+
+        try {
             
-            if (fileExtension_img.indexOf(fileExtension)) {
+            await fetch(`http://localhost:8080/equipamentos/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({name, desc})
+            });
 
-                let formData = new FormData(document.querySelector('#edit-form'))
-                formData.append('id', selectedEquipment.id)
-                
-                try {
-                    const response = await fetch('/equipamentos', {
-                        method: 'PUT',
-                        body: formData,
-                    })
-                    const data = await response.json()
-        
-                    if (response.ok && data.success) {
-                        toggleEditMenu()
-                        loadEquipments(data.equipamentosProntos)
-                    }
-                } catch (err) {
-                    console.error(err)
-                }
-            }
+            let data = await getEquipments()
+            loadEquipments(data.equipamentosProntos)
 
-        } else toggleEditMenu(); return
-    } else {
-        toggleEditMenu()
-        return
-    }
+            toggleEditMenu()
+
+        } catch (error) {
+            console.error('Erro ao editar o produto:', error);
+        }
+
+    } else toggleEditMenu(); return
 })
 
 // Envia para o servidor EXCLUIR

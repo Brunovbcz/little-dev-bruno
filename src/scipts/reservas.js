@@ -22,9 +22,18 @@ document.addEventListener('DOMContentLoaded', async (e) => {
     })
 })
 
+
 function toggleAddReservation() {
     const background = document.querySelector('.all-add-background')
     background.classList.toggle('visible')
+
+    const datalist = document.querySelector('.eq-list')
+
+    equipmentsNames.forEach(name => {
+        const option = document.createElement('option')
+        option.value = name
+        datalist.appendChild(name)
+    })
 }
 
 document.querySelector('.add-reservation-form').addEventListener('submit', (e) => {

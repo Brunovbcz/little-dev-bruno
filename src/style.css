@@ -508,7 +508,7 @@ form {
     width: 82%;
     height: 578px;
     border-radius: 10px;
-    gap: 18px;
+    gap: 5px;
     overflow-y: auto;
 }
 
@@ -549,4 +549,71 @@ form {
 
 .add-reservation:hover {
     transform: scale(1.05, 1.05);
+}
+
+.reservation-background {
+    display: flex;
+    flex-direction: column;
+    width: 348px;
+    height: 420px;
+    background-color: var(--cor-fundo);
+    border: solid 2px var(--cor-borda);
+    margin: 5px;
+    border-radius: 20px;
+}
+
+.line1 {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.line1 img {
+    width: 76px;
+}
+
+.line1 button {
+    width: 132px;
+    height: 42px;
+    border-radius: 10px;
+    border: solid 2px #d0d0d0;
+    box-shadow: -4px 4px 0px #d0d0d0;
+    background-color: white;
+    font-size: large;
+    font-weight: 900;
+    color: var(--cor-laranja);
+    cursor: pointer;
+    transition: transform 0.1s ease-in-out;
+}
+
+.line1 button:hover {
+    transform: scale(1.05, 1.05);
+}
+
+.title-label {
+    color: white;
+    font-weight: 900;
+    font-size: large;
+    text-indent: 45px;
+}
+
+.res-label {
+    color: white;
+    font-weight: 400;
+    font-size: medium;
+    text-indent: 45px;
+    margin-bottom: 10px;
+}
+
+.line1 select {
+    display: flex;
+    color: #666666;
+    margin-right: 20px;
+    width: 100%;
+    height: 42px;
+    text-indent: 10px;
+    border-radius: 10px;
+    border: solid 2px #d0d0d0;
+    font-weight: 500;
+    font-size: medium;  
 }
