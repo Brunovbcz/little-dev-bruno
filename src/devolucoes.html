@@ -47,40 +47,57 @@
 
     <div class="background">
         <div class="search-div">
-            <h1 id="title">Equipamentos</h1>
+            <h1 id="title">Devoluções</h1>
             <input id="search" type="search" placeholder="Pesquisar">
             <button id="filter"><img id="filter" src="images/filter.png"></button>
         </div>
-        
-        <button class="add-equipment" onclick="toggleAddMenu()">Adicionar</button>
 
-        <div class="equipments-background">
-            
+        <div class="returns-background">
+            <div class="return-background">
+                <label class="title-label">Solicitante:</label>
+                <label class="res-label" id="solicitante">aa</label>
+                <label class="title-label">Equipamento:</label>
+                <label class="res-label" id="equipamento">a</label>
+                <label class="title-label">Data Inicial:</label>
+                <label class="res-label" id="dateDevolucao">a</label>
+                <label class="title-label">Data de Devolução:</label>
+                <label class="res-label" id="sala">a</label>
+                <label class="title-label">Observação</label>
+                <label class="res-label" id="observacao">a</label>
+            </div>
         </div>
     </div>
-    
+
+    <!-- Hidden Menus -->
+
     <div class="all-add-background">
         <div class="add-background">
             <div class="line">
                 <h2>Adicionar</h2>
-                <button id="cancel" onclick="toggleAddMenu()">Cancelar</button>
+                <button id="cancel" onclick="toggleAddReservation()">Cancelar</button>
             </div>
             
-            <form id="add-form" class="add-equipment-form">
+            <form id="add-form" class="add-reservation-form">
                 <div class="line1">
-                    <label for="name" class="line-label">Nome do Equipamento</label>
-                    <input id="name" type="text" name="name" placeholder="Digite o nome do equipamento">
+                    <label for="name" class="line-label">Nome do Solicitante</label>
+                    <input id="name" type="text" name="name" placeholder="Digite o nome do solicitante">
                 </div>
 
                 <div class="line1">
-                    <label for="desc" class="line-label">Descrição</label>
-                    <input id="desc" type="text" name="desc" placeholder="Digite a descrição">
+                    <label for="eq" class="line-label">Equipamento</label>
+                    <select class="eq-list">
+                        <option>Selecione um equipamento</option>
+                    </select>
                 </div>
 
                 <div class="line1">
-                    <label  class="line-label">Imagem</label>
-                    <label for="file-input" class="custom-button">Escolher Imagem</label>
-                    <input id="file-input" type="file" name="file-input" accept="image/*" style="display: none;">
+                    <label class="line-label">Data e Horário de Devolução</label>
+                    <input id="limit-date" type="datetime-local" name="limitDate">
+                </div>
+
+                <div class="line1">
+                    <label for="obs" class="line-label">Observação</label>
+                    <input id="obs" type="text" name="obs" placeholder="Observação                                     (Opcional)">
                 </div>
 
                 <div class="add-div">
@@ -92,38 +109,11 @@
         
     </div>
 
-    <div class="all-edit-background">
-        <div class="add-background">
-            <div class="line">
-                <h2>Editar</h2>
-                <button id="cancel" onclick="toggleEditMenu()">Cancelar</button>
-            </div>
-            
-            <form id="edit-form" class="add-equipment-form">
-                <div class="line1">
-                    <label for="name" class="line-label">Nome do Equipamento</label>
-                    <input id="name" type="text" name="name" placeholder="Digite o nome do equipamento">
-                </div>
-
-                <div class="line1">
-                    <label for="desc" class="line-label">Descrição</label>
-                    <input id="desc" type="text" name="desc" placeholder="Digite a descrição">
-                </div>
-
-                <div class="add-div-edit">
-                    <button class="cancel-edit" id="delete">Excluir</button>
-                    <button class="add-equipment" id="aply" type="submit">Aplicar</button>
-                </div>
-                
-            </form>
-        </div>  
-    </div>
-
     <footer>
         <img src="images/Logos - Sistema Fiep RGB_COR_SENAI.png" id="logo">
     </footer>
 
-    <script src="scipts/equipamentos.js"></script>
+    <script src="scipts/reservas.js"></script>
     <script src="scipts/utils.js"></script>
 </body>
 </html>
