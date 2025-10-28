@@ -757,11 +757,14 @@ form {
     margin-top: auto;
     margin: 20px;
     background-color: rgba(255, 255, 255, 0.499);
+    border-radius: 15px;
 }
 
 .in-background .val {
     width: 100%;
     text-align: center;
+    font-size: large;
+    align-self: center;
     color: white;
 }
 
@@ -771,4 +774,7 @@ form {
     color: var(--cor-primaria);
     cursor: pointer;
     border: none;
+    font-size: large;
+    font-weight: 900;
+    border-radius: 15px;
 }

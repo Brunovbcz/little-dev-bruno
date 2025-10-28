@@ -74,7 +74,7 @@ app.post('/equipamentos', upload.single('file-input'), async (req, res) => {
         const resultado = await executePromisified(query, [name, desc, tipoMime, dadosBinarios]);
         const equipamentos = await executePromisified(selectQuery)
         const equipamentosProntos = equipamentos.map(row => {
-            const dataUrl = `data:${row.tipo_mime};base64,${row.imagem.toString('base64')}`
+        const dataUrl = `data:${row.tipo_mime};base64,${row.imagem.toString('base64')}`
           
             return {
               id: row.id,
@@ -97,6 +97,23 @@ app.post('/equipamentos', upload.single('file-input'), async (req, res) => {
     }
 })
 
+app.post('/reservas', async (req, res) => {
+    const { name, id, initialDatetime, finalDatetime, obs } = req.body
+
+    try {
+        const query = 'INSERT INTO reservas (id_equipamento, nome_solicitante, datahora_reserva, datahora_devolucao, observacao) VALUES (?, ?, ?, ?, ?)'
+        const result = await executePromisified(query, [id, name, initialDatetime, finalDatetime, obs])
+
+        res.json({
+            success: true,
+            result
+        })
+        
+    } catch (err) {
+        console.error(err)
+        res.status(500).json({ succes: false, message: 'Deu ruim no Servidor'})
+    }
+})
 
 // UPDATE
 app.put('/equipamentos/:id', async (req, res) => {
