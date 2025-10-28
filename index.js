@@ -44,6 +44,18 @@ app.get('/reservas', async (req, res) => {
     res.sendFile(path.join(__dirname, 'src', 'reservas.html'))
 })
 
+app.get('/devolucoes', async (req, res) => {
+    res.sendFile(path.join(__dirname, 'src', 'devolucoes.html'))
+})
+
+app.get('/relatorios', async (req, res) => {
+    res.sendFile(path.join(__dirname, 'src', 'relatorios.html'))
+})
+
+app.get('/configuracoes', async (req, res) => {
+    res.sendFile(path.join(__dirname, 'src', 'configuracoes.html'))
+})
+
 // POST
 app.post('/equipamentos', upload.single('file-input'), async (req, res) => {
     const file = req.file;

@@ -176,12 +176,13 @@ footer {
     display: flex;
     flex-direction: column;
     position: absolute;
-    margin: 48px;
+    margin: 2%;
     top: 0;
     left: 96px;
     height: calc(100vh - 48px);
     width: calc(100vw - 96px - 48px);
     transition: all 0.2s ease-in-out;
+    padding: 0;
 }
 .background.open {
     left: 366px;
@@ -244,7 +245,7 @@ footer {
     border: solid 3px var(--cor-escura);
     margin-top: 32px;
     width: 82%;
-    height: 578px;
+    height: 53.53%;
     border-radius: 10px;
     gap: 18px;
     overflow-y: auto;
@@ -506,7 +507,7 @@ form {
     border: solid 3px var(--cor-escura);
     margin-top: 32px;
     width: 82%;
-    height: 578px;
+    height: 53.53%;
     border-radius: 10px;
     gap: 5px;
     overflow-y: auto;
@@ -554,6 +555,7 @@ form {
 .reservation-background {
     display: flex;
     flex-direction: column;
+    justify-content: space-evenly;
     width: 348px;
     height: 420px;
     background-color: var(--cor-fundo);
@@ -616,4 +618,157 @@ form {
     border: solid 2px #d0d0d0;
     font-weight: 500;
     font-size: medium;  
+}
+
+.returns-background {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    background-color: var(--cor-escura);
+    border: solid 3px var(--cor-escura);
+    margin-top: 32px;
+    width: 82%;
+    height: 67%;
+    border-radius: 10px;
+    gap: 5px;
+    overflow-y: auto;
+}
+
+.returns-background::-webkit-scrollbar {
+    width: 10px;         
+    height: 10px;              
+}
+
+.returns-background::-webkit-scrollbar-track {
+    background: var(--cor-fundo);
+    border-radius: 4px;
+}
+
+.returns-background::-webkit-scrollbar-thumb {
+    background-color: var(--cor-borda);
+    border-radius: 4px;
+    border: 2px solid var(--cor-fundo);
+}
+
+.returns-background::-webkit-scrollbar-thumb:hover {
+    background-color: #727272;
+}
+
+.return-background {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 18vw;
+    height: 38.88vh;
+    background-color: var(--cor-fundo);
+    border: solid 2px var(--cor-borda);
+    margin: 5px;
+    border-radius: 20px;
+}
+
+.generate {
+    margin-top: 32px;
+    width: 168px;
+    height: 48px;
+    border-radius: 10px;
+    border: solid 2px #d0d0d0;
+    box-shadow: -4px 4px 0px #d0d0d0;
+    background-color: white;
+    font-size: large;
+    font-weight: 900;
+    color: var(--cor-primaria);
+    cursor: pointer;
+    transition: transform 0.1s ease-in-out;
+}
+
+.generate:hover{
+    transform: scale(1.05, 1.05);
+}
+
+.relatorios-background {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    background-color: var(--cor-escura);
+    border: solid 3px var(--cor-escura);
+    margin-top: 32px;
+    width: 82%;
+    height: 53.53%;
+    border-radius: 10px;
+    gap: 18px;
+    overflow-y: auto;
+}
+
+.relatorio-background {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 18.33vw;
+    height: 13.33vh;
+    background-color: var(--cor-fundo);
+    border: solid 2px var(--cor-borda);
+    margin: 5px;
+    border-radius: 20px;
+}
+
+.relatorio-background .date {
+    color: white;
+    font-weight: bold;
+}
+
+.relatorio-background .download-btn {
+    width: 168px;
+    height: 48px;
+    margin: 20px;
+    border-radius: 10px;
+    border: solid 2px #d0d0d0;
+    box-shadow: -4px 4px 0px #d0d0d0;
+    background-color: white;
+    font-size: large;
+    font-weight: 900;
+    color: var(--cor-primaria);
+    cursor: pointer;
+    transition: transform 0.1s ease-in-out;
+}
+
+.dalt-mode {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--cor-primaria);
+    width: 20%;
+    height: 15%;
+    border-radius: 15px;
+    margin-top: 5%;
+    justify-self: center;
+}
+
+.dalt-mode .title {
+    color: white;
+    font-size: large;
+}
+
+.dalt-mode .in-background {
+    display: flex;
+    justify-content: center;
+    width: 80%;
+    height: 30%;
+    margin-top: auto;
+    margin: 20px;
+    background-color: rgba(255, 255, 255, 0.499);
+}
+
+.in-background .val {
+    width: 100%;
+    text-align: center;
+    color: white;
+}
+
+.in-background button {
+    width: 15%;
+    background-color: rgba(255, 255, 255, 0.499);
+    color: var(--cor-primaria);
+    cursor: pointer;
+    border: none;
 }
