@@ -111,11 +111,15 @@ aside .buttons {
     position: absolute;
     display: flex;
     align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
     flex-direction: row;
-    gap: 100px;
-    top: 15%;
+    gap: 50px;
+    top: 10%;
     height:288px;
+    max-height: 100%;
     width: 100%;
+    margin-bottom: auto;
     transition: all 0.2s ease-in-out;
 }
 
@@ -123,8 +127,8 @@ aside .buttons {
     display: flex;
     flex-direction: column;
     background-color: var(--cor-fundo);
-    width: 480px;
-    height: 288px;
+    width: 25%;
+    height: 53.33;
     border-radius: 30px;
     min-width: 240px;
     min-height: 144px;
@@ -564,14 +568,36 @@ form {
     border-radius: 20px;
 }
 
-.line1 {
-    display: flex;
+.reservation-background .line1 {
+    display: none;
     justify-content: space-around;
     width: 100%;
 }
 
+.reservation-background .line1.visible {
+    display: flex;
+}
+
 .line1 img {
     width: 76px;
+}
+
+.waring-msg {
+    display: none;
+    align-items: center;
+    padding: 10px;
+    position: absolute;
+    top: 152px;
+    left: auto;
+    background-color: var(--cor-laranja);
+    width: 284px;
+    height: 120px;
+    border-radius: 15px;
+    color: white;
+}
+
+.line1:hover .waring-msg {
+  display: flex;
 }
 
 .line1 button {
@@ -747,6 +773,7 @@ form {
 .dalt-mode .title {
     color: white;
     font-size: large;
+    text-align: center;
 }
 
 .dalt-mode .in-background {

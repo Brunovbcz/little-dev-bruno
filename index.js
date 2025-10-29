@@ -102,11 +102,13 @@ app.post('/reservas', async (req, res) => {
 
     try {
         const query = 'INSERT INTO reservas (id_equipamento, nome_solicitante, datahora_reserva, datahora_devolucao, observacao) VALUES (?, ?, ?, ?, ?)'
-        const result = await executePromisified(query, [id, name, initialDatetime, finalDatetime, obs])
+        await executePromisified(query, [id, name, initialDatetime, finalDatetime, obs])
+
+        const reservas = await executePromisified('SELECT * FROM reservas')
 
         res.json({
             success: true,
-            result
+            reservas
         })
         
     } catch (err) {
@@ -161,6 +163,18 @@ app.get('/equipamentos-data', async (req, res) => {
             }
           })
         res.json({ success: true, equipamentosProntos })
+    } catch (err) {
+        console.error('Erro ao carregar dados', err)
+        res.status(500).json({success: false, message: 'Erro no servidor'})
+    }
+})
+
+app.get('/reservas-data', async (req, res) => {
+    try {
+        const query = 'SELECT * FROM reservas'
+        const reservas = await executePromisified(query)
+
+        res.json({ success: true, reservas })
     } catch (err) {
         console.error('Erro ao carregar dados', err)
         res.status(500).json({success: false, message: 'Erro no servidor'})
