@@ -36,7 +36,6 @@ function loadEquipments(equipamentosProntos) {
     })
 }
 
-
 // Função para alternar menu de adicionar equipamento
 function toggleAddMenu() {
     const background = document.querySelector('.all-add-background')
