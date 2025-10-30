@@ -5,6 +5,7 @@ const app = express();
 const path = require('path');
 const { queryObjects } = require('v8');
 const dbConnection = require('./models/db'); 
+const { exec } = require('child_process');
 
 const upload = multer({ 
     storage: multer.memoryStorage(),
@@ -117,6 +118,19 @@ app.post('/reservas', async (req, res) => {
     }
 })
 
+app.post('/devolucoes', async (req, res) => {
+    const { id, name, dataDelo, condicao } = req.body
+
+    try {
+        const query = 'INSERT INTO devolucoes (id_reserva, nome_devolutor, data_devolucao, condicao) VALUES (?, ?, ?, ?)'
+        await executePromisified(query, [id, name, dataDelo, condicao])
+
+    } catch (err) {
+        console.error(err)
+        res.status(500).json({ succes: false, message: 'Deu ruim no Servidor'})
+    }
+})
+
 // UPDATE
 app.put('/equipamentos/:id', async (req, res) => {
     const { id } = req.params;
@@ -163,6 +177,7 @@ app.get('/equipamentos-data', async (req, res) => {
             }
           })
         res.json({ success: true, equipamentosProntos })
+
     } catch (err) {
         console.error('Erro ao carregar dados', err)
         res.status(500).json({success: false, message: 'Erro no servidor'})
@@ -176,6 +191,18 @@ app.get('/reservas-data', async (req, res) => {
 
         res.json({ success: true, reservas })
     } catch (err) {
+        console.error('Erro ao carregar dados', err)
+        res.status(500).json({success: false, message: 'Erro no servidor'})
+    }
+})
+
+app.get('/devolucoes-data', async (req, res) => {
+    try {
+        const query = 'SELECT * FROM devolucoes'
+        const devolucoes = await executePromisified(query)
+
+        res.json({ success: true, devolucoes })
+    } catch(err) {
         console.error('Erro ao carregar dados', err)
         res.status(500).json({success: false, message: 'Erro no servidor'})
     }

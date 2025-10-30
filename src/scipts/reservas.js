@@ -15,12 +15,25 @@ function confirmDevolucao(btn) {
     }
 }
     
-function loadReservations(reservations){
+async function loadReservations(reservations){
     const reservationsBackground = document.querySelector('.reservations-background')
     reservationsBackground.innerHTML = ''
+    const equipamentos = await getEquipments();
+
+    const devolucoes = await getReturns();
+    const reservas = await getReservations();
+
+    if (!reservas || !devolucoes) return;
+    const idsDevolvidos = devolucoes.map(dev => dev.id_reserva || dev.id);
+
+    const reservasAtivas = reservas.filter(res => !idsDevolvidos.includes(res.id));
+
     
-    reservations.forEach(reserv => {
+    reservasAtivas.forEach(reserv => {
         if (reserv.observacao === '') reserv.observacao = 'Sem Observações'
+        const nome_equip = equipamentos.equipamentosProntos.filter(eq =>{
+            return reserv.id_equipamento === eq.id
+        });
 
         reservationsBackground.innerHTML += `
             <div class="reservation-background" id="${reserv.id}">
@@ -29,12 +42,12 @@ function loadReservations(reservations){
                         <div class="waring-msg">
                             <label>O prazo de devolução do equipamento expirou. Por favor, confirme se o solicitante já efetuou a devolução.</label>
                         </div>
-                    <button class="confirm-reservation" id="${reserv.id}" onclick="confirmDevolucao(this)">Confirmar</button>
+                    <button class="confirm-reservation" id="${reserv.id}" onclick="toggleConfirmReservation(${reserv.id})">Confirmar</button>
                 </div>
                 <label class="title-label">Solicitante:</label>
                 <label class="res-label" id="solicitante">${reserv.nome_solicitante}</label>
                 <label class="title-label">Equipamento:</label>
-                <label class="res-label" id="equipamento">sla</label>
+                <label class="res-label" id="equipamento">${nome_equip[0].nome}</label>
                 <label class="title-label">Data Inicial:</label>
                 <label class="res-label" id="initial-date">${toDatetime(reserv.datahora_reserva)}</label>
                 <label class="title-label">Data de Devolução:</label>
@@ -81,6 +94,19 @@ async function getReservations() {
     }
 }
 
+async function getReturns() {
+    try {
+        const response = await fetch('/devolucoes-data')
+        const data = await response.json()
+
+        if (response.ok && data.success ) {
+            return data.devolucoes
+        }
+    } catch (err) {
+        console.error(err)
+    }
+}
+
 async function loadEquipments() {
     let equipments = await getEquipments()
     
@@ -105,7 +131,7 @@ async function verifyExpiredReservations() {
 
 // alterna o menu de add uma reserva
 function toggleAddReservation() {
-    const background = document.querySelector('.all-add-background')
+    const background = document.querySelector('#reservation-background')
     background.classList.toggle('visible')
 
     const datalist = document.querySelector('.eq-list')
@@ -118,17 +144,41 @@ function toggleAddReservation() {
         option.setAttribute('id', obj.id)
         datalist.appendChild(option)
     })
-    console.log(equipmentsNames)
 }
 
-document.addEventListener('DOMContentLoaded', async (e) => {
-    loadEquipments()
-    loadReservations(await getReservations())
-    verifyExpiredReservations()
-})
+async function toggleConfirmReservation(id) {
+    const background = document.querySelector('#confirm-reservation-background')
+    background.classList.toggle('visible')  
+    background.querySelector('form').setAttribute('idd', id)
+
+    const devolucoes = await getReturns();
+    const reservas = await getReservations();
+
+    if (!reservas || !devolucoes) return;
+    const idsDevolvidos = devolucoes.map(dev => dev.id_reserva || dev.id);
+
+    const reservasAtivas = reservas.filter(res => !idsDevolvidos.includes(res.id));
+
+    await loadReservations(reservasAtivas);
+    verifyExpiredReservations();
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+    loadEquipments();
+    const devolucoes = await getReturns();
+    const reservas = await getReservations();
+
+    if (!reservas || !devolucoes) return;
+    const idsDevolvidos = devolucoes.map(dev => dev.id_reserva || dev.id);
+
+    const reservasAtivas = reservas.filter(res => !idsDevolvidos.includes(res.id));
+
+    await loadReservations(reservasAtivas);
+    verifyExpiredReservations();
+});
 
 // verifica os input e envia p servidor fazer os baguio
-document.querySelector('.add-reservation-form').addEventListener('submit', async (e) => {
+document.querySelector('#add-form').addEventListener('submit', async (e) => {
     e.preventDefault()
     
     let name = nameInput.value.trim()
@@ -136,7 +186,7 @@ document.querySelector('.add-reservation-form').addEventListener('submit', async
     let initialDatetime = toMySqlDatetime(new Date())
     let finalDatetime = toMySqlDatetime(dateInput.value)
     let obs = obsInput.value.trim()
-    console.log(initialDatetime, finalDatetime)
+    
     if (!obs) obs = ''
 
     let id = eqInput.options[eqInput.selectedIndex].getAttribute('id')
@@ -158,11 +208,41 @@ document.querySelector('.add-reservation-form').addEventListener('submit', async
 
         if (response.ok && data.success) {
             console.log(data)
-            loadReservations(data.reservas)
+            await loadReservations(data.reservas)
             toggleAddReservation()
         }
     } catch (err) {
         console.error(err)
+    }
+})
+
+//Envia p servidor adicionar a devolução do equipamento
+document.querySelector('#confirm-form').addEventListener('submit', async (e) => {
+    e.preventDefault()
+
+    let name = document.querySelector('#confirm-form').querySelector('#name').value.trim()
+    let condicao = document.querySelector('#confirm-form').querySelector('#cond').value.trim()
+    let dataDelo = toMySqlDatetime(new Date())
+
+    let id = document.querySelector('#confirm-form').getAttribute('idd')
+
+    if (!name || !condicao) {
+        alert('Preencha os Campos')
+        return
+    }
+
+    toggleConfirmReservation()
+
+    //try catch p n da ruim no sistema
+    try {
+        await fetch('/devolucoes', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({id, name, dataDelo, condicao})
+        })
+
+    } catch(err) {
+        console.log(err)
     }
 })
 

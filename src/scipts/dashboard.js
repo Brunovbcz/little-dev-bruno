@@ -2,6 +2,7 @@ const eqCadastrados = document.querySelector('#eq-cadastrados')
 const totalReservas = document.querySelector('#total-reservas')
 const reservasExpiradas = document.querySelector('#reservas-expiradas')
 const reservasDentroPrazo = document.querySelector('#reservas-dentro-prazo')
+const totalDevolucoes = document.querySelector('#total-devolucoes')
 
 document.addEventListener('DOMContentLoaded', async (e) => {
     //Equipamentos
@@ -48,6 +49,25 @@ document.addEventListener('DOMContentLoaded', async (e) => {
 
         }
     } catch(err) {
+        console.error(err)
+    }
+
+    // Devolucoes
+
+    try {
+        const response = await fetch('/devolucoes-data')
+        const data = await response.json()
+
+        if (response.ok && data.success ) {
+            let counter = 0
+
+            data.devolucoes.forEach((d) => {
+                counter++
+            })
+
+            totalDevolucoes.textContent = counter
+        }
+    } catch (err) {
         console.error(err)
     }
 })
