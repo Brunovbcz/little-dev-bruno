@@ -31,6 +31,7 @@ async function loadReservations(reservations){
     
     reservasAtivas.forEach(reserv => {
         if (reserv.observacao === '') reserv.observacao = 'Sem Observações'
+        
         const nome_equip = equipamentos.equipamentosProntos.filter(eq =>{
             return reserv.id_equipamento === eq.id
         });
@@ -38,10 +39,10 @@ async function loadReservations(reservations){
         reservationsBackground.innerHTML += `
             <div class="reservation-background" id="${reserv.id}">
                 <div class="line1">
+                    <div class="waring-msg">
+                        <label>O prazo de devolução do equipamento expirou. Por favor, confirme se o solicitante já efetuou a devolução.</label>
+                    </div>
                     <img class="alert-img" src="images/warning.png">
-                        <div class="waring-msg">
-                            <label>O prazo de devolução do equipamento expirou. Por favor, confirme se o solicitante já efetuou a devolução.</label>
-                        </div>
                     <button class="confirm-reservation" id="${reserv.id}" onclick="toggleConfirmReservation(${reserv.id})">Confirmar</button>
                 </div>
                 <label class="title-label">Solicitante:</label>
@@ -57,13 +58,25 @@ async function loadReservations(reservations){
             </div>
         `
     })
+
+    // Hover na imagem p aparecer o alerta
+
+    document.querySelectorAll('.alert-img').forEach(a => {
+        a.addEventListener('mouseenter', (e) => {
+            a.parentElement.querySelector('.waring-msg').classList.add('visible')
+        })
+        a.addEventListener('mouseleave', (e) => {
+            a.parentElement.querySelector('.waring-msg').classList.remove('visible')
+        })
+    })
+    
 }
 
 function enableLine1(id) {
     document.querySelectorAll('.reservation-background').forEach(reservation => {
-        if (reservation.querySelector('.line1').classList.contains('visible')) return
+        if (reservation.querySelector('.line1').querySelector('img').classList.contains('visible')) return
 
-        if (reservation.id === String(id)) reservation.querySelector('.line1').classList.add('visible')
+        if (reservation.id === String(id)) reservation.querySelector('.line1').querySelector('img').classList.add('visible')
     })
 }
 

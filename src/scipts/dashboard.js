@@ -4,6 +4,8 @@ const reservasExpiradas = document.querySelector('#reservas-expiradas')
 const reservasDentroPrazo = document.querySelector('#reservas-dentro-prazo')
 const totalDevolucoes = document.querySelector('#total-devolucoes')
 
+var devolucoes = []
+
 document.addEventListener('DOMContentLoaded', async (e) => {
     //Equipamentos
 
@@ -23,35 +25,6 @@ document.addEventListener('DOMContentLoaded', async (e) => {
         console.error(err)
     }
 
-    // Reservas
-
-    try {
-        const response = await fetch('/reservas-data')
-        const data = await response.json()
-
-        if (response.ok && data.success) {
-            let counter = 0
-            let c2 = 0
-            let c3 = 0
-
-            data.reservas.forEach((r) => {
-                counter++
-
-                if (new Date().getTime() > new Date(r.datahora_devolucao).getTime()) {
-                    c2++  
-                } else {
-                    c3++
-                }
-            })
-            totalReservas.textContent = counter
-            reservasExpiradas.textContent = c2
-            reservasDentroPrazo.textContent = c3
-
-        }
-    } catch(err) {
-        console.error(err)
-    }
-
     // Devolucoes
 
     try {
@@ -60,6 +33,7 @@ document.addEventListener('DOMContentLoaded', async (e) => {
 
         if (response.ok && data.success ) {
             let counter = 0
+            devolucoes = data.devolucoes
 
             data.devolucoes.forEach((d) => {
                 counter++
@@ -68,6 +42,38 @@ document.addEventListener('DOMContentLoaded', async (e) => {
             totalDevolucoes.textContent = counter
         }
     } catch (err) {
+        console.error(err)
+    }
+
+    // Reservas
+
+    try {
+        const response = await fetch('/reservas-data')
+        const data = await response.json()
+
+        if (response.ok && data.success) {
+            let totalRes = 0
+            let reservasAti = 0
+            let reservasExp = 0
+
+            const idsDevolvidos = devolucoes.map(dev => dev.id_reserva || dev.id);
+            const reservasAtivas = data.reservas.filter(res => !idsDevolvidos.includes(res.id));
+
+            reservasAtivas.forEach((r) => {
+                totalRes++
+
+                if (new Date().getTime() > new Date(r.datahora_devolucao).getTime()) {
+                    reservasExp++  
+                } else {
+                    reservasAti++
+                }
+            })
+            totalReservas.textContent = totalRes
+            reservasExpiradas.textContent = reservasExp
+            reservasDentroPrazo.textContent = reservasAti
+
+        }
+    } catch(err) {
         console.error(err)
     }
 })

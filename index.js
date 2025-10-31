@@ -34,27 +34,27 @@ app.get('/', async (req, res) => {
 
 // Rotas HTML
 app.get('/dashboard', async (req, res) => {
-    res.sendFile(path.join(__dirname, 'src', 'dashboard.html'))
+    res.sendFile(path.join(__dirname, 'src/html', 'dashboard.html'))
 })
 
 app.get('/equipamentos', async (req, res) => {
-    res.sendFile(path.join(__dirname, 'src', 'equipamentos.html'))
+    res.sendFile(path.join(__dirname, 'src/html', 'equipamentos.html'))
 })
 
 app.get('/reservas', async (req, res) => {
-    res.sendFile(path.join(__dirname, 'src', 'reservas.html'))
+    res.sendFile(path.join(__dirname, 'src/html', 'reservas.html'))
 })
 
 app.get('/devolucoes', async (req, res) => {
-    res.sendFile(path.join(__dirname, 'src', 'devolucoes.html'))
+    res.sendFile(path.join(__dirname, 'src/html', 'devolucoes.html'))
 })
 
 app.get('/relatorios', async (req, res) => {
-    res.sendFile(path.join(__dirname, 'src', 'relatorios.html'))
+    res.sendFile(path.join(__dirname, 'src/html', 'relatorios.html'))
 })
 
 app.get('/configuracoes', async (req, res) => {
-    res.sendFile(path.join(__dirname, 'src', 'configuracoes.html'))
+    res.sendFile(path.join(__dirname, 'src/html', 'configuracoes.html'))
 })
 
 // POST

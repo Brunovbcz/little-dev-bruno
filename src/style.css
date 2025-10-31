@@ -7,6 +7,7 @@
     --cor-fundo: #A4A4A4;
     --cor-laranja: #E25A14;
     --cor-borda: #D0D0D0;
+    --fundo: white;
 }
 
 *{
@@ -19,6 +20,7 @@
 body {
     height: 100vh;
     width: 100vw;
+    background-color: var(--fundo);
 }
 
 aside {
@@ -377,7 +379,6 @@ footer {
 
 .line1 {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     width: 100%;
     margin-top: 24px;
@@ -569,9 +570,12 @@ form {
 }
 
 .reservation-background .line1 {
-    display: none;
+    display: flex;
+    position: relative;
     justify-content: space-around;
     width: 100%;
+    height: 8%;
+    margin-bottom: 4%;
 }
 
 .reservation-background .line1.visible {
@@ -579,24 +583,40 @@ form {
 }
 
 .line1 img {
+    display: none;
     width: 76px;
+    justify-self: left;
+}
+
+.line1 button {
+    justify-self: right;
+}
+
+.line1 img.visible {
+    display: block;
 }
 
 .waring-msg {
     display: none;
+    position: absolute;
+    top: calc(0% - 35px);
+    left: 0;
     align-items: center;
     padding: 10px;
-    position: absolute;
-    top: 152px;
     left: auto;
     background-color: var(--cor-laranja);
     width: 284px;
     height: 120px;
     border-radius: 15px;
     color: white;
+    z-index: 999;
 }
 
-.line1:hover .waring-msg {
+.waring-msg.visible {
+    display: block;
+}
+
+.line1 {
   display: flex;
 }
 
@@ -622,14 +642,14 @@ form {
     color: white;
     font-weight: 900;
     font-size: large;
-    text-indent: 45px;
+    margin-left: 45px;
 }
 
 .res-label {
     color: white;
     font-weight: 400;
     font-size: medium;
-    text-indent: 45px;
+    margin-left: 45px;
     margin-bottom: 10px;
 }
 
