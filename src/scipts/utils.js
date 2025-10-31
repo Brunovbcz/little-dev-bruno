@@ -39,3 +39,23 @@ function toDatetime(dateString) {
 
     return `${day}/${month}/${year} ${hours}:${minutes}`;
 }
+
+function setSettings(colors) {
+    localStorage.setItem('colors', colors)
+}
+
+function loadSettings() {
+    for (const key in colors) {
+        if (colors.hasOwnProperty(key)) {
+
+            const cssVarName = `--${key.replace(/_/g, '-')}`;
+            document.documentElement.style.setProperty(cssVarName, colors[key]);
+        }
+    }
+}
+
+
+// Load Settings
+document.addEventListener('DOMContentLoaded', () => {
+    loadSettings()
+})

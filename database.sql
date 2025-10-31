@@ -7,7 +7,7 @@ create table equipamentos(
     descricao varchar(200) not null,
     tipo_mime varchar(50) not null,
     imagem longblob not null
-); 
+);
 
 create table reservas(
     id int auto_increment primary key,
@@ -15,16 +15,16 @@ create table reservas(
     nome_solicitante varchar(100),
     datahora_reserva datetime,
     datahora_devolucao datetime,
-    observacao varchar(30),
+    observacao varchar(100),
     foreign key (id_equipamento) references equipamentos(id)
 );
 
 create table devolucoes(
     id int auto_increment primary key,
     id_reserva int,
-    nome_devolvedor varchar(100),
+    nome_devolutor varchar(100),
     data_devolucao datetime,
-    condicao varchar(35),
+    condicao varchar(100),
     foreign key (id_reserva) references reservas(id)
 );
 
