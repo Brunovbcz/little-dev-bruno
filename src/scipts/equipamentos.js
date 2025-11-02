@@ -1,6 +1,8 @@
 var equipments = []
 let selectedEquipment = {}
 
+const searchInput = document.querySelector('#search')
+
 // Carrega os equipamentos no frontend conforme a data recebida
 function loadEquipments(equipamentosProntos) {
 
@@ -211,10 +213,26 @@ document.querySelector('#delete').addEventListener('click', async (e) => {
         if (response.ok && data.success) {
             const newData = await getEquipments()
             loadEquipments(newData.equipamentosProntos)
+        } else {
+            alert('Não foi possível excluir o equipamento')
         }
     } catch (err) {
         console.error(err)
     }
 
     toggleEditMenu()
+})
+
+searchInput.addEventListener('input', (e) => {
+    const term = searchInput.value.toLowerCase()
+
+    document.querySelectorAll('.eq-background').forEach(eq => {
+        let text = eq.innerText.toLowerCase()
+
+        if(text.includes(term)) {
+            eq.style.display = 'flex'
+        } else {
+            eq.style.display = 'none'
+        }
+    })
 })
