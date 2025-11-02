@@ -41,21 +41,46 @@ function toDatetime(dateString) {
 }
 
 function setSettings(colors) {
-    localStorage.setItem('colors', colors)
+    localStorage.setItem('colors', JSON.stringify(colors))
 }
 
 function loadSettings() {
+    let colors = JSON.parse(localStorage.getItem('colors'))
+    
     for (const key in colors) {
         if (colors.hasOwnProperty(key)) {
-
             const cssVarName = `--${key.replace(/_/g, '-')}`;
             document.documentElement.style.setProperty(cssVarName, colors[key]);
         }
     }
+
+    if (document.querySelector('#tema')) {
+        if (document.querySelector('#tema').querySelector('.val')) {
+            document.querySelector('#tema').querySelector('.val').textContent = colors.text
+        }
+    }
+    
+    if (document.querySelector('#dalt-mode')) {
+        if (document.querySelector('#dalt-mode').querySelector('.val')) {
+            document.querySelector('#dalt-mode').querySelector('.val').textContent = colors.dalt_text
+        }
+    }
+
+    if (colors.menu_icon) {
+        document.querySelector('#menu-btn').classList.add('dark')
+        document.querySelectorAll('.menu-icon').forEach(m => {
+            m.classList.add('dark')  
+        })
+
+        document.querySelector('footer').querySelector('img').src = 'images/Logos - Sistema Fiep RGB_BRANCO_SENAI.png'
+    } else {
+        document.querySelector('#menu-btn').classList.remove('dark')
+        document.querySelectorAll('.menu-icon').forEach(m => {
+            m.classList.remove('dark')  
+        })
+
+        document.querySelector('footer').querySelector('img').src = 'images/Logos - Sistema Fiep RGB_COR_SENAI.png'
+    }
 }
 
-
-// Load Settings
-document.addEventListener('DOMContentLoaded', () => {
-    loadSettings()
-})
+loadSettings()

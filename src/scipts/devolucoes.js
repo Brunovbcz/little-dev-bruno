@@ -1,3 +1,5 @@
+const searchInput = document.querySelector('#search')
+
 async function loadDevolucoes(returns) {
     const reservas = await getReservas()
     const retunrsBackground = document.querySelector('.returns-background')
@@ -50,4 +52,18 @@ async function getReservas() {
 
 document.addEventListener('DOMContentLoaded', async (e) => {
     loadDevolucoes(await getDevolucoes())
+})
+
+searchInput.addEventListener('input', (e) => {
+    const term = searchInput.value.toLowerCase()
+
+    document.querySelectorAll('.return-background').forEach(ret => {
+        let text = ret.innerText.toLowerCase()
+
+        if(text.includes(term)) {
+            ret.style.display = 'flex'
+        } else {
+            ret.style.display = 'none'
+        }
+    })
 })

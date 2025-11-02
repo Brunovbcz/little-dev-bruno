@@ -5,6 +5,8 @@ const eqInput = document.querySelector('.eq-list')
 const dateInput = document.querySelector('#limit-date')
 const obsInput = document.querySelector('#obs')
 
+const searchInput = document.querySelector('#search')
+
 function confirmDevolucao(btn) {
     let a = confirm('Deseja confirmar a devolução? Essa ação não poderá ser desfeita')
 
@@ -28,7 +30,6 @@ async function loadReservations(reservations){
 
     const reservasAtivas = reservas.filter(res => !idsDevolvidos.includes(res.id));
 
-    
     reservasAtivas.forEach(reserv => {
         if (reserv.observacao === '') reserv.observacao = 'Sem Observações'
         
@@ -59,8 +60,9 @@ async function loadReservations(reservations){
         `
     })
 
-    // Hover na imagem p aparecer o alerta
+    let colors = JSON.parse(localStorage.getItem('colors'))
 
+    // Hover na imagem p aparecer o alerta
     document.querySelectorAll('.alert-img').forEach(a => {
         a.addEventListener('mouseenter', (e) => {
             a.parentElement.querySelector('.waring-msg').classList.add('visible')
@@ -68,6 +70,12 @@ async function loadReservations(reservations){
         a.addEventListener('mouseleave', (e) => {
             a.parentElement.querySelector('.waring-msg').classList.remove('visible')
         })
+
+        if (colors.cor_laranja === '#A39107') {
+            a.classList.add('dalt')
+        } else {
+            a.classList.add('remove')
+        }
     })
     
 }
@@ -263,3 +271,18 @@ document.querySelector('#confirm-form').addEventListener('submit', async (e) => 
 setInterval(async () => {
     verifyExpiredReservations()
 }, 1000)
+
+// Pesquisa
+searchInput.addEventListener('input', (e) => {
+    const term = searchInput.value.toLowerCase()
+
+    document.querySelectorAll('.reservation-background').forEach(res => {
+        let text = res.innerText.toLowerCase()
+
+        if(text.includes(term)) {
+            res.style.display = 'flex'
+        } else {
+            res.style.display = 'none'
+        }
+    })
+})
