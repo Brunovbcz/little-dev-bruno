@@ -47,15 +47,15 @@ async function loadReservations(reservations){
                     <button class="confirm-reservation" id="${reserv.id}" onclick="toggleConfirmReservation(${reserv.id})">Confirmar</button>
                 </div>
                 <label class="title-label">Solicitante:</label>
-                <label class="res-label" id="solicitante">${reserv.nome_solicitante}</label>
+                <label class="res-label" id="solicitante">${stripHTMLTags(reserv.nome_solicitante)}</label>
                 <label class="title-label">Equipamento:</label>
-                <label class="res-label" id="equipamento">${nome_equip[0].nome}</label>
+                <label class="res-label" id="equipamento">${stripHTMLTags(nome_equip[0].nome)}</label>
                 <label class="title-label">Data Inicial:</label>
                 <label class="res-label" id="initial-date">${toDatetime(reserv.datahora_reserva)}</label>
                 <label class="title-label">Data de Devolução:</label>
                 <label class="res-label" id="final-date">${toDatetime(reserv.datahora_devolucao)}</label>
                 <label class="title-label">Observação:</label>
-                <label class="res-label" id="observacao">${reserv.observacao}</label>
+                <label class="res-label" id="observacao">${stripHTMLTags(reserv.nome_solicitante)}</label>
             </div>
         `
     })
