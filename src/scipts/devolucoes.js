@@ -12,13 +12,13 @@ async function loadDevolucoes(returns) {
         retunrsBackground.innerHTML += `
         <div class="return-background">
             <label class="title-label">Nome do Solicitante:</label>
-            <label class="res-label" id="solicitante">${nome_solicitante}</label>
+            <label class="res-label" id="solicitante">${stripHTMLTags(nome_solicitante)}</label>
             <label class="title-label">Nome do Devolutor:</label>
-            <label class="res-label" id="devolutor">${r.nome_devolutor}</label>
+            <label class="res-label" id="devolutor">${stripHTMLTags(r.nome_devolutor)}</label>
             <label class="title-label">Data de Devolção:</label>
             <label class="res-label" id="data-devolucao">${toDatetime(r.data_devolucao)}</label>
             <label class="title-label">Condição:</label>
-            <label class="res-label" id="cond">${r.condicao}</label>
+            <label class="res-label" id="cond">${stripHTMLTags(r.condicao)}</label>
         </div>
         `
     })

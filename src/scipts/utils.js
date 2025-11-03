@@ -83,4 +83,9 @@ function loadSettings() {
     }
 }
 
+function stripHTMLTags(string) {
+    const parseHTML = new DOMParser().parseFromString(string, 'text/html')
+    return parseHTML.body.textContent || '';
+}
+
 loadSettings()

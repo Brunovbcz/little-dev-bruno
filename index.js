@@ -6,6 +6,7 @@ const path = require('path');
 const { queryObjects } = require('v8');
 const dbConnection = require('./models/db'); 
 const { exec } = require('child_process');
+const puppeteer = require('puppeteer');
 
 const upload = multer({ 
     storage: multer.memoryStorage(),
@@ -29,7 +30,7 @@ function executePromisified(sql, values) {
 }
 
 app.get('/', async (req, res) => {
-    res.sendFile(path.join(__dirname, 'src', 'dashboard.html'))
+    res.sendFile(path.join(__dirname, 'src/html', 'dashboard.html'))
 })
 
 // Rotas HTML
