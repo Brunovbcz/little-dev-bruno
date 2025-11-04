@@ -30,17 +30,14 @@ async function getReturns() {
 async function getReadyReservations() {
     const devolucoes = await getReturns()
     const reservas = await getReservations()
-
-    let readyReservations = []
-
-    devolucoes.forEach(dev => {
-        reservas.forEach(res => {
-            if (dev.id_reserva !== res.id) readyReservations.push(res)
-        })
-    });
-
+  
+    const devolucaoIds = new Set(devolucoes.map(dev => dev.id_reserva))
+  
+    const readyReservations = reservas.filter(res => !devolucaoIds.has(res.id))
+  
     return readyReservations
-}
+  }
+  
 
 async function getEquipments() {
     try {
@@ -94,19 +91,33 @@ async function loadRelatorios() {
 
 // Baixar pdf
 button.addEventListener('click', async (e) => {
-    const reservas = await getReadyReservations()
+    const a = confirm('Só é possivel gerar 1 relatório por dia, deseja continuar?')
+    if (!a) return
+
+    const relatorios = await getRelatorios()
+
+    relatorios.forEach(rel => {
+        console.log(toDate(rel.data_relatorio), toDate(new Date()))
+        if (toDate(rel.data_relatorio) === toDate(new Date())) alert('Você já gerou um relatório hoje'); return
+    })
+
+    const allReservas = await getReservations()
     const devolucoes = await getReturns()
     const equipamentos = await getEquipments()
 
     function getEquipName(id) {
-        id = Number(id)
-        const eq = equipamentos.find(e => Number(e.id) === id)
-        return eq ? eq.nome_equipamento : "Indefinido"
+        const eq = equipamentos.find(e => e.id == id)
+        return eq.nome
     }
 
     async function getReserva(id) {
         let reservs = await getReservations()
         return reservs.find(r => r.id === id)
+    }
+
+    async function getEquipamento(id) {
+        let eqs = await getEquipments()
+        return eqs.find(e => e.id === id)
     }
 
     function isHoje(dateStr) {
@@ -121,7 +132,7 @@ button.addEventListener('click', async (e) => {
         )
     }
 
-    const emprestimos = reservas
+    const emprestimos = allReservas
         .filter(r => isHoje(r.datahora_reserva))
         .map(r => ({
             solicitante: r.nome_solicitante,
@@ -136,9 +147,11 @@ button.addEventListener('click', async (e) => {
         .filter(dev => isHoje(dev.data_devolucao))
         .map(async dev => {
         const reservaLinkada = await getReserva(dev.id_reserva)
+        const eqLinkado = await getEquipamento(dev.id_equipamento)
         console.log(reservaLinkada)
         return {
             solicitante: reservaLinkada.nome_solicitante,
+            equipamento: eqLinkado.nome,
             devolutor: dev.nome_devolutor,
             dataDevolucao: toDatetime(dev.data_devolucao),
             condicao: dev.condicao
@@ -167,9 +180,10 @@ button.addEventListener('click', async (e) => {
 
     doc.autoTable({
         startY: y,
-        head: [["Solicitante", "Devolutor", "Data de Devolução", "Condição"]],
+        head: [["Solicitante", "Equipamento", "Devolutor", "Data de Devolução", "Condição"]],
         body: devolucoesPDF.map(l => [
             l.solicitante,
+            l.equipamento,
             l.devolutor,
             l.dataDevolucao,
             l.condicao
