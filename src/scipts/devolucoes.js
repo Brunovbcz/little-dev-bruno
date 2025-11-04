@@ -2,17 +2,28 @@ const searchInput = document.querySelector('#search')
 
 async function loadDevolucoes(returns) {
     const reservas = await getReservas()
+    const equipamentos = await getEquipments()
     const retunrsBackground = document.querySelector('.returns-background')
     retunrsBackground.innerHTML = ''
 
     returns.forEach(r => {
+        let nome_eq
         const reserva = reservas.find(res => res.id === r.id_reserva)
         const nome_solicitante = reserva ? reserva.nome_solicitante : 'Desconhecido'
+        
+        equipamentos.forEach(eq => {
+            if (eq.id == r.id_equipamento) {
+                nome_eq = eq.nome
+            } 
+        })
+        console.log(nome_eq)
         
         retunrsBackground.innerHTML += `
         <div class="return-background">
             <label class="title-label">Solicitante:</label>
             <label class="res-label" id="solicitante">${stripHTMLTags(nome_solicitante)}</label>
+            <label class="title-label">Equipamento:</label>
+            <label class="res-label" id="eq">${stripHTMLTags(nome_eq)}</label>
             <label class="title-label">Devolutor:</label>
             <label class="res-label" id="devolutor">${stripHTMLTags(r.nome_devolutor)}</label>
             <label class="title-label">Data de Devolção:</label>
@@ -33,6 +44,19 @@ async function getDevolucoes() {
             return data.devolucoes
         }
     } catch (err) {
+        console.error(err)
+    }
+}
+
+async function getEquipments() {
+    try {
+        const response = await fetch('/equipamentos-data')
+        const data = await response.json()
+
+        if (response.ok && data.success) {
+            return data.equipamentosProntos
+        }
+    } catch(err) {
         console.error(err)
     }
 }

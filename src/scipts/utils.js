@@ -57,6 +57,8 @@ function setSettings(colors) {
 function loadSettings() {
     let colors = JSON.parse(localStorage.getItem('colors'))
     
+    if (!colors) return
+    
     for (const key in colors) {
         if (colors.hasOwnProperty(key)) {
             const cssVarName = `--${key.replace(/_/g, '-')}`;

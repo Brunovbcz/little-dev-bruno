@@ -71,7 +71,7 @@ async function loadReservations(reservations){
             a.parentElement.querySelector('.waring-msg').classList.remove('visible')
         })
 
-        if (colors.cor_laranja === '#A39107') {
+        if (colors && colors.cor_laranja === '#A39107') {
             a.classList.add('dalt')
         } else {
             a.classList.add('remove')
@@ -228,7 +228,6 @@ document.querySelector('#add-form').addEventListener('submit', async (e) => {
         const data = await response.json()
 
         if (response.ok && data.success) {
-            console.log(data)
             await loadReservations(data.reservas)
             toggleAddReservation()
         }
