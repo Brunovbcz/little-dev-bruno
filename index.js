@@ -6,7 +6,6 @@ const path = require('path');
 const { queryObjects } = require('v8');
 const dbConnection = require('./models/db'); 
 const { exec } = require('child_process');
-const puppeteer = require('puppeteer');
 
 const upload = multer({ 
     storage: multer.memoryStorage(),
@@ -99,6 +98,29 @@ app.post('/equipamentos', upload.single('file-input'), async (req, res) => {
     }
 })
 
+app.post('/relatorios', upload.single('file'), async (req, res) => {
+    const { data } = req.body
+    const file = req.file
+    
+    if (!file) {
+        return res.status(400).json({ success: false, message: 'Nenhum arquivo enviado.' });
+    }
+
+    try {
+        const tipoMime = file.mimetype
+        const dadosBinarios = file.buffer
+
+        const query = 'INSERT INTO relatorios (data_relatorio, tipo_mime, relatorio) VALUES (?, ?, ?)'
+        const selectQuery = 'SELECT * FROM relatorios'
+        const result = await executePromisified(query, [data, tipoMime, dadosBinarios])
+
+        res.json({ success: true, result})
+    } catch (err) {
+        console.error('Erro ao salvar o arquivo:', err);
+        res.status(500).json({ success: false, message: 'Erro interno do servidor.' });
+    }
+})
+
 app.post('/reservas', async (req, res) => {
     const { name, id, initialDatetime, finalDatetime, obs } = req.body
 
@@ -120,11 +142,11 @@ app.post('/reservas', async (req, res) => {
 })
 
 app.post('/devolucoes', async (req, res) => {
-    const { id, name, dataDelo, condicao } = req.body
+    const { id, id_equipamento, name, dataDelo, condicao } = req.body
 
     try {
-        const query = 'INSERT INTO devolucoes (id_reserva, nome_devolutor, data_devolucao, condicao) VALUES (?, ?, ?, ?)'
-        await executePromisified(query, [id, name, dataDelo, condicao])
+        const query = 'INSERT INTO devolucoes (id_reserva, id_equipamento, nome_devolutor, data_devolucao, condicao) VALUES (?, ?, ?, ?, ?)'
+        await executePromisified(query, [id, id_equipamento, name, dataDelo, condicao])
 
     } catch (err) {
         console.error(err)
@@ -152,11 +174,17 @@ app.put('/equipamentos/:id', async (req, res) => {
 // DELETE
 app.delete('/equipamentos', async (req, res) => {
     const { id } = req.body
-    const query = 'DELETE FROM equipamentos WHERE id = ?'
+
+    const query1 = 'DELETE FROM devolucoes WHERE id_equipamento = ?'
+    const query2 = 'DELETE FROM reservas WHERE id_equipamento = ?'
+    const query3 = 'DELETE FROM equipamentos WHERE id = ?'
 
     try {
-        const result = await executePromisified(query, [id])
-        res.json({ success: true, result })
+        const result1 = await executePromisified(query1, [id])
+        const result2 = await executePromisified(query2, [id])
+        const result3 = await executePromisified(query3, [id])
+
+        res.json({ success: true, result1, result2, result3 })
     } catch (err) {
         res.status(500).json({ success: false, error: err.message})
     }
@@ -207,6 +235,33 @@ app.get('/devolucoes-data', async (req, res) => {
         console.error('Erro ao carregar dados', err)
         res.status(500).json({success: false, message: 'Erro no servidor'})
     }
+})
+
+app.get('/relatorios-data', async (req, res) => {
+    try {
+        const query = 'SELECT * FROM relatorios'
+        const relatorios = await executePromisified(query)
+
+        res.json({ success: true, relatorios })
+    } catch(err){
+        console.error('Erro ao carregar dados', err)
+        res.status(500).json({success: false, message: 'Erro no servidor'})
+    }
+})
+
+app.get('/relatorios/:id/download', async (req, res) => {
+    const { id } = req.params
+
+    const query = 'SELECT tipo_mime, relatorio FROM relatorios WHERE id = ? LIMIT 1'
+    const [row] = await executePromisified(query, [id])
+
+    if (!row) {
+        return res.status(404).send("não encontrado")
+    }
+
+    res.setHeader('Content-Type', row.tipo_mime)
+    res.setHeader('Content-Disposition', `attachment; filename=Relatorio_${id}.pdf`)
+    res.send(row.relatorio)
 })
 
 app.listen(8080, () => {

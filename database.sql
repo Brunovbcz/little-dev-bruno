@@ -22,10 +22,12 @@ create table reservas(
 create table devolucoes(
     id int auto_increment primary key,
     id_reserva int,
+    id_equipamento int,
     nome_devolutor varchar(100),
     data_devolucao datetime,
     condicao varchar(100),
-    foreign key (id_reserva) references reservas(id)
+    foreign key (id_reserva) references reservas(id),
+    foreign key (id_equipamento) references equipamentos(id)
 );
 
 create table relatorios(
