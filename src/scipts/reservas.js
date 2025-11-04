@@ -55,7 +55,7 @@ async function loadReservations(reservations){
                 <label class="title-label">Data de Devolução:</label>
                 <label class="res-label" id="final-date">${toDatetime(reserv.datahora_devolucao)}</label>
                 <label class="title-label">Observação:</label>
-                <label class="res-label" id="observacao">${stripHTMLTags(reserv.nome_solicitante)}</label>
+                <label class="res-label" id="observacao">${stripHTMLTags(reserv.observacao)}</label>
             </div>
         `
     })
@@ -246,6 +246,11 @@ document.querySelector('#confirm-form').addEventListener('submit', async (e) => 
     let dataDelo = toMySqlDatetime(new Date())
 
     let id = document.querySelector('#confirm-form').getAttribute('idd')
+    let reservs = await getReservations()
+    
+    let reservation = reservs.find(res => res.id == id)
+
+    let id_equipamento = reservation.id_equipamento
 
     if (!name || !condicao) {
         alert('Preencha os Campos')
@@ -259,7 +264,7 @@ document.querySelector('#confirm-form').addEventListener('submit', async (e) => 
         await fetch('/devolucoes', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({id, name, dataDelo, condicao})
+            body: JSON.stringify({id, id_equipamento, name, dataDelo, condicao})
         })
 
     } catch(err) {
